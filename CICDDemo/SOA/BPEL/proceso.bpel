@@ -1,0 +1,84 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer 
+  
+  Created: Tue Oct 02 12:50:52 CEST 2018
+  Author:  e.garcia.san.martin
+  Type: BPEL 2.0 Process
+  Purpose: Synchronous BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="proceso"
+               targetNamespace="http://xmlns.oracle.com/CICDdemo/CICDDemo/proceso"
+               xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+               xmlns:client="http://xmlns.oracle.com/CICDdemo/CICDDemo/proceso"
+               xmlns:ora="http://schemas.oracle.com/xpath/extension"
+               xmlns:ui="http://xmlns.oracle.com/soa/designer"
+               xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+         xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:ns1="http://xmlns.oracle.com/CICDdemo/CICDDemo/eco"
+         xmlns:ns2="http://xmlns.oracle.com/CICDdemo/CICDDemo/esquemas">
+
+    <import ui:processWSDL="true" namespace="http://xmlns.oracle.com/CICDdemo/CICDDemo/proceso" location="../WSDLs/proceso.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <!-- 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        PARTNERLINKS                                                      
+        List of services participating in this BPEL process               
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    --> 
+  <partnerLinks>
+    <!-- 
+      The 'client' role represents the requester of this service. It is 
+      used for callback. The location and correlation information associated
+      with the client role are automatically set using WS-Addressing.
+    -->
+    <partnerLink name="cliente" partnerLinkType="client:proceso" myRole="procesoProvider"/>
+    <partnerLink name="backend" partnerLinkType="ns1:eco" partnerRole="ecoProvider"/>
+  </partnerLinks>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      VARIABLES                                                        
+      List of messages and XML documents used within this BPEL process 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <variables>
+    <!-- Reference to the message passed as input during initiation -->
+    <variable name="inputVariable" messageType="client:procesoRequestMessage"/>
+
+    <!-- Reference to the message that will be returned to the requester-->
+    <variable name="outputVariable" messageType="client:procesoResponseMessage"/>
+    <variable name="llamaBackend_process_InputVariable" messageType="ns1:ecoRequestMessage"/>
+    <variable name="llamaBackend_process_OutputVariable" messageType="ns1:ecoResponseMessage"/>
+  </variables>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     ORCHESTRATION LOGIC                                               
+     Set of activities coordinating the flow of messages across the    
+     services integrated within this business process                  
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <sequence name="main">
+
+    <!-- Receive input from requestor. (Note: This maps to operation defined in proceso.wsdl) -->
+    <receive name="receiveInput" partnerLink="cliente" portType="client:proceso" operation="process" variable="inputVariable" createInstance="yes"/>
+    <assign name="in">
+      <copy>
+        <from>$inputVariable.payload</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$llamaBackend_process_InputVariable.payload</to>
+      </copy>
+    </assign>
+    <invoke name="llamaBackend" bpelx:invokeAsDetail="no" partnerLink="backend" portType="ns1:eco" operation="process"
+            inputVariable="llamaBackend_process_InputVariable" outputVariable="llamaBackend_process_OutputVariable"/>
+    <assign name="out">
+      <copy>
+        <from>$llamaBackend_process_OutputVariable.payload</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload</to>
+      </copy>
+    </assign>
+    <!-- Generate reply to synchronous request -->
+    <reply name="replyOutput" partnerLink="cliente" portType="client:proceso" operation="process" variable="outputVariable"/>
+  </sequence>
+</process>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions
+     name="eco"
+     targetNamespace="http://xmlns.oracle.com/CICDdemo/CICDDemo/eco"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+     xmlns:client="http://xmlns.oracle.com/CICDdemo/CICDDemo/eco"
+     xmlns:ns1="http://xmlns.oracle.com/CICDdemo/CICDDemo/esquemas"
+     xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+     xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    >
+    <plnk:partnerLinkType name="eco">
+        <plnk:role name="ecoProvider" portType="client:eco"/>
+    </plnk:partnerLinkType>
+    <wsdl:types>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema">
+            <import namespace="http://xmlns.oracle.com/CICDdemo/CICDDemo/esquemas" schemaLocation="../Schemas/modelo.xsd"/>
+        </schema>
+    </wsdl:types>
+    <wsdl:message name="ecoRequestMessage">
+        <wsdl:part name="payload" element="ns1:entrada"/>
+    </wsdl:message>
+    <wsdl:message name="ecoResponseMessage">
+        <wsdl:part name="payload" element="ns1:salida"/>
+    </wsdl:message>
+    <wsdl:portType name="eco">
+        <wsdl:operation name="process">
+            <wsdl:input message="client:ecoRequestMessage"/>
+            <wsdl:output message="client:ecoResponseMessage"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="ecoBinding" type="client:eco">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="process">
+            <soap:operation style="document" soapAction="process"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="cliente_eco_ep">
+        <wsdl:port name="eco_pt" binding="client:ecoBinding">
+            <soap:address location="http://CPX-2E6TFHAEZVQ.dir.svc.accenture.com:7101/soa-infra/services/default/CICDDemo/cliente_eco_ep"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>
