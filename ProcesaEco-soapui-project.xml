@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project id="1dbb27fc-8335-4df3-9c5a-39ce8a9962c2" activeEnvironment="Default" name="ProcesaEco" soapui-version="5.4.0" abortOnError="false" runType="SEQUENTIAL" resourceRoot="" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" id="2f36b7f2-f332-4f40-adf5-5bb90293af16" wsaVersion="NONE" name="procesoBinding" type="wsdl" bindingName="{http://xmlns.oracle.com/CICDdemo/CICDDemo/proceso}procesoBinding" soapVersion="1_1" anonymous="optional" definition="http://CPX-2E6TFHAEZVQ.dir.svc.accenture.com:7101/soa-infra/services/default/CICDDemo/cliente_ep?WSDL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="http://CPX-2E6TFHAEZVQ.dir.svc.accenture.com:7101/soa-infra/services/default/CICDDemo/cliente_ep?WSDL"><con:part><con:url>http://CPX-2E6TFHAEZVQ.dir.svc.accenture.com:7101/soa-infra/services/default/CICDDemo/cliente_ep?WSDL</con:url><con:content><![CDATA[<wsdl:definitions name="proceso" targetNamespace="http://xmlns.oracle.com/CICDdemo/CICDDemo/proceso" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://xmlns.oracle.com/CICDdemo/CICDDemo/proceso" xmlns:ns1="http://xmlns.oracle.com/CICDdemo/CICDDemo/esquemas" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <wsdl:documentation>
+    <abstractWSDL>http://CPX-2E6TFHAEZVQ.dir.svc.accenture.com:7101/soa-infra/services/default/CICDDemo!1.0/WSDLs/proceso.wsdl</abstractWSDL>
+  </wsdl:documentation>
+  <plnk:partnerLinkType name="proceso">
+    <plnk:role name="procesoProvider" portType="client:proceso"/>
+  </plnk:partnerLinkType>
+  <wsdl:types>
+    <schema xmlns="http://www.w3.org/2001/XMLSchema">
+      <import namespace="http://xmlns.oracle.com/CICDdemo/CICDDemo/esquemas" schemaLocation="http://CPX-2E6TFHAEZVQ.dir.svc.accenture.com:7101/soa-infra/services/default/CICDDemo/cliente_ep?XSD=../Schemas/modelo.xsd"/>
+    </schema>
+  </wsdl:types>
+  <wsdl:message name="procesoRequestMessage">
+    <wsdl:part name="payload" element="ns1:entrada"/>
+  </wsdl:message>
+  <wsdl:message name="procesoResponseMessage">
+    <wsdl:part name="payload" element="ns1:salida"/>
+  </wsdl:message>
+  <wsdl:portType name="proceso">
+    <wsdl:operation name="process">
+      <wsdl:input message="client:procesoRequestMessage"/>
+      <wsdl:output message="client:procesoResponseMessage"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="procesoBinding" type="client:proceso">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="process">
+      <soap:operation style="document" soapAction="process"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="cliente_ep">
+    <wsdl:port name="proceso_pt" binding="client:procesoBinding">
+      <soap:address location="http://CPX-2E6TFHAEZVQ.dir.svc.accenture.com:7101/soa-infra/services/default/CICDDemo/cliente_ep"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part><con:part><con:url>http://CPX-2E6TFHAEZVQ.dir.svc.accenture.com:7101/soa-infra/services/default/CICDDemo/cliente_ep?XSD=../Schemas/modelo.xsd</con:url><con:content><![CDATA[<schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://xmlns.oracle.com/CICDdemo/CICDDemo/esquemas" xmlns="http://www.w3.org/2001/XMLSchema">
+  <element name="entrada">
+    <complexType>
+      <sequence>
+        <element name="in" type="string"/>
+      </sequence>
+    </complexType>
+  </element>
+  <element name="salida">
+    <complexType>
+      <sequence>
+        <element name="out" type="string"/>
+      </sequence>
+    </complexType>
+  </element>
+</schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://CPX-2E6TFHAEZVQ.dir.svc.accenture.com:7101/soa-infra/services/default/CICDDemo/cliente_ep</con:endpoint></con:endpoints><con:operation id="f88271db-adaf-402c-a306-c427e6d93a83" isOneWay="false" action="process" name="process" bindingOperationName="process" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="78784188-17ec-4894-99f0-84740b656259" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://CPX-2E6TFHAEZVQ.dir.svc.accenture.com:7101/soa-infra/services/default/CICDDemo/cliente_ep</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:esq="http://xmlns.oracle.com/CICDdemo/CICDDemo/esquemas">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <esq:entrada>\r
+         <esq:in>Eugenio</esq:in>\r
+      </esq:entrada>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="process"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:testSuite id="993858d9-5320-4b1a-94c9-1d17fba1dafb" name="ProcesaEcoTestSuite"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase id="858a6ead-553b-4f8d-bd7a-cbb3f5eac1cf" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Saludo" searchProperties="true"><con:settings/><con:testStep type="request" name="SOAP Request" id="17315c66-e9b2-4c6e-a04d-99db684baa4e"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>procesoBinding</con:interface><con:operation>process</con:operation><con:request name="SOAP Request" id="e34c7967-a557-4a31-bba2-922d10370206"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://CPX-2E6TFHAEZVQ.dir.svc.accenture.com:7101/soa-infra/services/default/CICDDemo/cliente_ep</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:esq="http://xmlns.oracle.com/CICDdemo/CICDDemo/esquemas">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <esq:entrada>\r
+         <esq:in>Nico</esq:in>\r
+      </esq:entrada>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="a5a90e5a-295f-4d56-bb7d-8cee0d631628"/><con:assertion type="Simple Contains" id="5aabbd44-19f2-4b1e-8671-40cd0baa686d" name="Contains"><con:configuration><token>Hola, Nico</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:credentials><con:username>nop</con:username><con:password>nop</con:password><con:selectedAuthProfile>Basic</con:selectedAuthProfile><con:addedBasicAuthenticationTypes>Basic</con:addedBasicAuthenticationTypes><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:properties/></con:testSuite><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/><con:oAuth1ProfileContainer/></con:soapui-project>
